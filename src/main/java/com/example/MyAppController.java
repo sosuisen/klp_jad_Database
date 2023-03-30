@@ -26,7 +26,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class MyAppController {
-	private String dbPath = "./jad.db";
+	private String dbPath = "";
 	private final DAO dao = new DAO("jdbc:sqlite:" + dbPath);
 
 	private final String TODO_COMPLETED = "完了";
