@@ -10,9 +10,10 @@ public class ToDo {
 	 * e.g. 2022-12-01
 	 */
 	private String date;
+	private int priority;
 	private boolean completed;
 	
-	public ToDo(int id, String title, String date, boolean completed) {
+	public ToDo(int id, String title, String date, int priority, boolean completed) {
 		this.id = id;
 		this.title = title;
 		this.date = date;
@@ -47,6 +48,12 @@ public class ToDo {
 	}
 	public void setLocalDate(LocalDate localDate) {
 		this.date = localDate.toString();
+	}
+	public int getPriority() {
+		return priority;
+	}
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 	public boolean isCompleted() {
 		return completed;

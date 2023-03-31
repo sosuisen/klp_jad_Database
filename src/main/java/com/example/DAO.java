@@ -35,8 +35,9 @@ public class DAO {
 				int myId = rs.getInt("id");
 				String title = rs.getString("title");
 				String date = rs.getString("date");
+				int priority = rs.getInt("priority");
 				int completedStr = rs.getInt("completed");
-				todo = new ToDo(myId, title, date, completedStr == 1 ? true : false);
+				todo = new ToDo(myId, title, date, priority, completedStr == 1 ? true : false);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,8 +56,9 @@ public class DAO {
 				int myId = rs.getInt("id");
 				String title = rs.getString("title");
 				String date = rs.getString("date");
+				int priority = rs.getInt("priority");
 				int completedStr = rs.getInt("completed");
-				todos.add(new ToDo(myId, title, date, completedStr == 1 ? true : false));
+				todos.add(new ToDo(myId, title, date, priority, completedStr == 1 ? true : false));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,11 +71,12 @@ public class DAO {
 		try (
 				Connection conn = DriverManager.getConnection(url);
 				PreparedStatement pstmt = conn
-						.prepareStatement("INSERT INTO todo(title, date, completed) VALUES(?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+						.prepareStatement("INSERT INTO todo(title, date, priority, completed) VALUES(?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			) {
 			pstmt.setString(1, title);
 			pstmt.setString(2, date);
-			pstmt.setInt(3, completed ? 1: 0);
+			pstmt.setInt(3, priority);
+			pstmt.setInt(4, completed ? 1: 0);
 			pstmt.executeUpdate();
 
 			// AUTOINCREMENTで生成された id を取得します。
@@ -81,7 +84,7 @@ public class DAO {
 			rs.next();
 			int id = rs.getInt(1);
 
-			todo = new ToDo(id, title, date, false);
+			todo = new ToDo(id, title, date, priority, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -126,6 +129,22 @@ public class DAO {
 				PreparedStatement pstmt = conn.prepareStatement("UPDATE todo SET completed=(?) WHERE id=?");
 			) {
 			pstmt.setInt(1, completed ? 1 : 0);
+			pstmt.setInt(2, id);
+			int num = pstmt.executeUpdate();
+			if (num <= 0) {
+				System.out.println("id " + id + " の行はありません。");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updatePriority(int id, int priority) {
+		try (
+				Connection conn = DriverManager.getConnection(url);
+				PreparedStatement pstmt = conn.prepareStatement("UPDATE todo SET priority=(?) WHERE id=?");
+			) {
+			pstmt.setInt(1, priority);
 			pstmt.setInt(2, id);
 			int num = pstmt.executeUpdate();
 			if (num <= 0) {
