@@ -78,7 +78,7 @@ public class DAO {
 			// AUTOINCREMENTで生成された id を取得します。
 			ResultSet rs = pstmt.getGeneratedKeys();
 			rs.next();
-			int id = rs.getInt("last_insert_rowid()");
+			int id = rs.getInt(1);
 
 			todo = new ToDo(id, title, date, false);
 		} catch (Exception e) {
