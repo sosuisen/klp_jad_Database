@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -68,12 +69,12 @@ public class DAO {
 		try (
 				Connection conn = DriverManager.getConnection(url);
 				PreparedStatement pstmt = conn
-						.prepareStatement("INSERT INTO todo(title, date, completed) VALUES(?, ?, ?)");
+						.prepareStatement("INSERT INTO todo(title, date, completed) VALUES(?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			) {
 			pstmt.setString(1, title);
 			pstmt.setString(2, date);
 			pstmt.setInt(3, completed ? 1: 0);
-			pstmt.execute();
+			pstmt.executeUpdate();
 
 			// AUTOINCREMENTで生成された id を取得します。
 			ResultSet rs = pstmt.getGeneratedKeys();
