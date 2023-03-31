@@ -102,6 +102,29 @@ public class MyAppController {
 			}
 		});
 
+		var priorityField = new TextField(String.valueOf(todo.getPriority()));
+		priorityField.getStyleClass().add("todo-priority");
+		priorityField.setPrefWidth(40);
+		HBox.setHgrow(priorityField, Priority.NEVER);
+		priorityField.setOnAction(e -> {
+			int priority = getPriority(priorityField);
+			System.out.println("優先度更新[" + todo.getId() + "] " + priority);
+			// ここで todoオブジェクトのpriorityを更新
+			
+			// ここで daoを用いてpriorityを更新
+			
+		});
+		priorityField.focusedProperty().addListener((observable, oldProperty, newProperty) -> {
+			if (!newProperty) {
+				int priority = getPriority(priorityField);
+				System.out.println("優先度更新[" + todo.getId() + "] " + priority);
+				// ここで todoオブジェクトのpriorityを更新
+				
+				// ここで daoを用いてpriorityを更新
+				
+			}
+		});
+		
 		var datePicker = new DatePicker(todo.getLocalDate());
 		datePicker.getStyleClass().add("todo-date");
 		datePicker.setPrefWidth(105);
