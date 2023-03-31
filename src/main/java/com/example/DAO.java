@@ -64,7 +64,7 @@ public class DAO {
 		return todos;
 	}
 
-	public ToDo create(String title, String date, boolean completed) {
+	public ToDo create(String title, String date, int priority, boolean completed) {
 		ToDo todo = null;
 		try (
 				Connection conn = DriverManager.getConnection(url);

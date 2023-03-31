@@ -66,6 +66,9 @@ public class MyAppController {
 	private TextField headerTitleField;
 
 	@FXML
+	private TextField headerPriorityField;
+
+	@FXML
 	private ScrollPane scrollPane;
 
 	@FXML
@@ -156,6 +159,18 @@ public class MyAppController {
 		FXCollections.sort(todoListItems, comp);
 	}
 
+	private int getPriority(TextField tf) {
+		String txt = tf.getText();
+		int priority;
+		try {
+			priority = Integer.parseInt(txt);
+		} catch (NumberFormatException nfe) {
+			priority = 1;
+			tf.setText("1");
+		}
+		return priority;
+	}
+
 	public void initialize() {
 		sortTypeMenu.getItems().addAll(MENU.keySet());
 		sortTypeMenu.setValue(TODO_DATE);
@@ -184,7 +199,7 @@ public class MyAppController {
 			if (title.equals(""))
 				return;
 			LocalDate localDate = headerDatePicker.getValue(); // 2022-12-01
-			ToDo newToDo = dao.create(title, localDate.toString(), false);
+			ToDo newToDo = dao.create(title, localDate.toString(), getPriority(headerPriorityField), false);
 			todos.add(newToDo);
 			todoListItems.add(createToDoHBox(newToDo));
 			sort(sortTypeMenu.getValue(), sortOrderMenu.getValue());
