@@ -17,6 +17,7 @@ public class ToDo {
 		this.id = id;
 		this.title = title;
 		this.date = date;
+		this.priority = priority;
 		this.completed = completed;
 	}
 	public int getId() {

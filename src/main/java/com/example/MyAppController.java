@@ -109,13 +109,19 @@ public class MyAppController {
 		priorityField.setOnAction(e -> {
 			int priority = getPriority(priorityField);
 			System.out.println("優先度更新[" + todo.getId() + "] " + priority);
+			// ここで todoオブジェクトのpriorityを更新
 			todo.setPriority(priority);
+			// ここで daoを用いてpriorityを更新
+			dao.updatePriority(todo.getId(), priority);
 		});
 		priorityField.focusedProperty().addListener((observable, oldProperty, newProperty) -> {
 			if (!newProperty) {
 				int priority = getPriority(priorityField);
 				System.out.println("優先度更新[" + todo.getId() + "] " + priority);
+				// ここで todoオブジェクトのpriorityを更新
 				todo.setPriority(priority);
+				// ここで daoを用いてpriorityを更新
+				dao.updatePriority(todo.getId(), priority);
 			}
 		});
 		
@@ -132,7 +138,7 @@ public class MyAppController {
 		var deleteBtn = new Button("削除");
 		deleteBtn.getStyleClass().add("todo-delete");
 
-		var todoItem = new HBox(completedCheckBox, titleField, datePicker, deleteBtn);
+		var todoItem = new HBox(completedCheckBox, titleField, datePicker, priorityField, deleteBtn);
 		todoItem.getStyleClass().add("todo-item");
 
 		deleteBtn.setOnAction(e -> {
