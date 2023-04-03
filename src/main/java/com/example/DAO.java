@@ -81,7 +81,7 @@ public class DAO {
 			rs.next();
 			int id = rs.getInt(1);
 
-			todo = new ToDo(id, title, date, false);
+			todo = new ToDo(id, title, date, completed);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
