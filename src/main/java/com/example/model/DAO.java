@@ -143,4 +143,13 @@ public class DAO {
             e.printStackTrace();
         }
     }
+    
+    public void deleteAll() {
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement("DELETE FROM todo")) {
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

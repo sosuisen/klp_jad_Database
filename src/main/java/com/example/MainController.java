@@ -33,6 +33,9 @@ public class MainController {
 	private MenuItem menuItemAbout;
 	
 	@FXML
+	private MenuItem menuItemClear;
+	
+	@FXML
 	private MenuItem menuItemClose;
 	
 	@FXML
@@ -133,6 +136,8 @@ public class MainController {
 			sortByCompletedAndDate();
 		});
 
+		menuItemClear.setOnAction(e -> model.clear());		
+		
 		model.loadInitialData();
 		sortByCompletedAndDate();
 	}
@@ -150,7 +155,7 @@ public class MainController {
 	    headerPriorityChoiceBox.getItems().addAll(1, 2, 3, 4, 5);
 	    headerPriorityChoiceBox.setValue(3);
 
-		menuItemAbout.setOnAction(e -> showInfo("ToDo App"));		
+	    menuItemAbout.setOnAction(e -> showInfo("ToDo App"));		
 		menuItemClose.setOnAction(e -> Platform.exit());
 	}
 }

@@ -22,6 +22,12 @@ public class ToDoManager {
 		dao.delete(todo.getId());
 	}
 
+	public void clear() {
+		todos.clear();
+		// System.out.println("Removed #" + todo.getId());
+		dao.deleteAll();		
+	}
+
 	private void addListener(ToDo todo) {
 		todo.titleProperty().addListener((observable, oldValue, newValue) -> 
 		//		System.out.println("Title changed #" + todo.getId() + " : " + newValue));
