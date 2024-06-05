@@ -1,0 +1,44 @@
+// build.gradle for BuildShip javafx_template
+// https://github.com/sosuisen/javafx-gradle-templates
+
+plugins {
+    id 'application'
+    id 'eclipse'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'org.beryx.jlink' version '2.26.0'
+}
+
+ext {
+    moduleName = 'mvcapp'
+    packageName = 'com.example'
+    entryPoint = "${packageName}.MvcApp"
+    executableName = 'MvcApp'
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+javafx {
+    version = "21"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+application {
+    mainModule = moduleName
+    mainClass = entryPoint
+    if (System.getProperty('DEBUG', 'false') == 'true') {
+        applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005"]
+    }
+}
+
+jlink {
+    options = ['--strip-debug', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = executableName
+    }
+}
