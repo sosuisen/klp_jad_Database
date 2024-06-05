@@ -1,4 +1,4 @@
-arguments=--init-script ../.metadata/initMVC.gradle
+arguments=
 auto.sync=false
 build.scans.enabled=false
 connection.gradle.distribution=GRADLE_DISTRIBUTION(VERSION(8.7))
@@ -8,6 +8,6 @@ gradle.user.home=
 java.home=
 jvm.arguments=
 offline.mode=false
-override.workspace.settings=false
+override.workspace.settings=true
 show.console.view=false
 show.executions.view=false
