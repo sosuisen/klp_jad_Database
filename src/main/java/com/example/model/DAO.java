@@ -37,7 +37,7 @@ public class DAO {
 						rs.getInt("id"),
 						rs.getString("title"),
 						LocalDate.parse(rs.getString("date")),
-						3, // ここは発展課題で変更
+						rs.getInt("priority"),
 						rs.getInt("completed") == 1
 				);
 			}
@@ -59,7 +59,7 @@ public class DAO {
 						rs.getInt("id"),
 						rs.getString("title"),
 						LocalDate.parse(rs.getString("date")),
-						3, // ここは発展課題で変更
+						rs.getInt("priority"),
 						rs.getInt("completed") == 1
 				));
 			}
@@ -73,12 +73,13 @@ public class DAO {
 		try (
 				Connection conn = DriverManager.getConnection(url);
 				PreparedStatement pstmt = conn.prepareStatement(
-						"INSERT INTO todo(title, date, completed) VALUES(?, ?, ?)",
+						"INSERT INTO todo(title, date, priority, completed) VALUES(?, ?, ?, ?)",
 						Statement.RETURN_GENERATED_KEYS);
 			) {
 			pstmt.setString(1, title);
 			pstmt.setString(2, date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-			pstmt.setInt(3, completed ? 1 : 0);
+			pstmt.setInt(3, priority);
+			pstmt.setInt(4, completed ? 1 : 0);
 			pstmt.executeUpdate();
 
 			// AUTOINCREMENTで生成された id を取得します。
@@ -127,7 +128,7 @@ public class DAO {
     
     // ここは発展課題で追加
 	public void updatePriority(int id, int priority) {
-	
+		updateField("UPDATE todo SET priority=? WHERE id=?", id, priority);
 	}
 
     public void delete(int id) {

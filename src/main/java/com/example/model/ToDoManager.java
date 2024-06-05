@@ -32,8 +32,9 @@ public class ToDoManager {
 		dao.updateDate(todo.getId(), newValue));
 		
 		todo.priorityProperty().addListener((observable, oldValue, newValue) ->
-		        System.out.println("Priority changed #" + todo.getId() + " : " + newValue));
+		//        System.out.println("Priority changed #" + todo.getId() + " : " + newValue));
 		// ここは発展課題で変更
+		dao.updatePriority(todo.getId(), newValue));
 
 		todo.completedProperty().addListener((observable, oldValue, newValue) -> 
 		// 		System.out.println("Completed changed #" + todo.getId() + " : " + newValue));
