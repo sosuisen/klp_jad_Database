@@ -45,14 +45,13 @@ public class ToDoManager {
 		if (todos.size() > 0)
 			newId = todos.stream().max((todo1, todo2) -> todo1.getId() - todo2.getId()).get().getId() + 1;
 
-		addNewToDo(newId, title, date, priority, completed);
+		var todo = dao.create(title, date, priority, completed);
+		addNewToDo(todo);
 
 		System.out.println("Added #" + newId);
 	}
 
-	private void addNewToDo(int id, String title, LocalDate date, int priority, boolean completed) {
-		// var todo = new ToDo(id, title, date, priority, completed);
-		var todo = dao.create(title, date, priority, completed);
+	private void addNewToDo(ToDo todo) {
 		addListener(todo);
 		todos.add(todo);
 	}
@@ -60,6 +59,6 @@ public class ToDoManager {
 	public void loadInitialData() {
 		// addNewToDo(0, "Design", LocalDate.parse("2022-12-01"), 4, true);
 		// addNewToDo(1, "Implementation", LocalDate.parse("2022-12-07"), 3, false);
-		todos.addAll(dao.getAll());
+		dao.getAll().forEach(todo -> addNewToDo(todo));	
 	}
 }
