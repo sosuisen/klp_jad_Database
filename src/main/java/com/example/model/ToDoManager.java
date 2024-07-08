@@ -42,14 +42,8 @@ public class ToDoManager {
 	}
 
 	public void create(String title, LocalDate date, int priority, boolean completed) {
-		int newId = 0;
-		if (todos.size() > 0)
-			newId = todos.stream().max((todo1, todo2) -> todo1.getId() - todo2.getId()).get().getId() + 1;
-
 		var todo = dao.create(title, date, priority, completed);
 		addNewToDo(todo);
-
-		System.out.println("Added #" + newId);
 	}
 
 	private void addNewToDo(ToDo todo) {
